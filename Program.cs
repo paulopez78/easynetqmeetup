@@ -28,7 +28,7 @@ namespace EasyQMeetup
 
             Console.WriteLine("Publishing events.");
             
-            foreach (dynamic domainEvent in easyMeetup.GetEvents().ToList())
+            foreach (dynamic domainEvent in easyMeetup.GetEvents())
                 bus.Publish(domainEvent);
 
             Console.WriteLine("Events published.");
