@@ -8,10 +8,6 @@ namespace EasyQMeetup
 {
     public class Program
     {
-        public class Message
-        {
-            public string Text { get; set; }
-        }
         public static void Main(string[] args)
         {
             var bus = RabbitHutch.CreateBus("amqp://guest:guest@localhost:5672");
