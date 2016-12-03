@@ -5,7 +5,10 @@
     "emitEntryPoint": true
   },
   "dependencies": {
-    "EasyNetQ": "2.0.3-netcore0001"
+    "EasyNetQ": "2.0.3-netcore0001",
+    "Domain": {
+      "target": "project"
+    }
   },
   "frameworks": {
     "netcoreapp1.1": {

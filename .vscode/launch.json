@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/bin/Debug/netcoreapp1.1/easynetqmeetup.dll",
+            "program": "${workspaceRoot}/src/publisher/bin/Debug/netcoreapp1.1/publisher.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
             "externalConsole": false,
