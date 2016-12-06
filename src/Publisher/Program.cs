@@ -10,7 +10,7 @@ namespace EasyQMeetup
         {
             var bus = RabbitHutch.CreateBus("amqp://guest:guest@localhost:5672");
 
-            var easyMeetup = new Meetup(1, "EasyNetQ Meetup Demo");
+            var easyMeetup = new Meetup(".NET Libs Meetup");
             easyMeetup.RSVP("Pau", 2);
             easyMeetup.CancelRSVP("Pau");
     

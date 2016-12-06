@@ -8,6 +8,7 @@ namespace EasyQMeetup
     {
         public static void Main(string[] args)
         {
+            var attendesList = new MeetupGoingList();
             var bus = RabbitHutch.CreateBus("amqp://guest:guest@localhost:5672");
 
             bus.Subscribe<RSVPConfirmedEvent>("MeetupRSVP_Subscription", 

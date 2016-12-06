@@ -1,16 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EasyQMeetup.Domain.Events;
 
 namespace EasyQMeetup.Domain
 {
-    public interface IDomainEvent {}
     public class Meetup
     {
-        private readonly ICollection<IDomainEvent> _events;
+        private readonly ICollection<IDomainEvent> _events = new List<IDomainEvent>();
+        
+        public Guid Id { get; private set;}
 
-        public Meetup(int id, string description)
+        public string Description { get; private set;}
+
+        //EF needed parameterless constructor
+        public Meetup()
         {
-            _events = new List<IDomainEvent>();
+        }
+
+        public Meetup(string description)
+        {
+            Id = Guid.NewGuid();
+            Description = description;
         }
 
         public void RSVP(string userName, int plusNumber = 0) =>
