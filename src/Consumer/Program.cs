@@ -8,14 +8,22 @@ namespace EasyQMeetup
     {
         public static void Main(string[] args)
         {
-            var attendesList = new MeetupGoingList();
+            var goingList = new MeetupGoingList();
             var bus = RabbitHutch.CreateBus("amqp://guest:guest@localhost:5672");
 
             bus.Subscribe<RSVPConfirmedEvent>("MeetupRSVP_Subscription", 
-                @event => Console.WriteLine($"RSVP confirmed for {@event.UserName} with {@event.PlusNumber}"));
+                @event => {
+                    goingList.Confirm(@event.UserName, @event.PlusNumber);
+                    Console.Clear();
+                    Console.Write(goingList.ToString());
+                });
 
             bus.Subscribe<RSVPCancelledEvent>("MeetupRSVP_Subscription", 
-                @event => Console.WriteLine($"RSVP cancelled for {@event.UserName}"));
+                @event => {
+                    goingList.Cancel(@event.UserName);
+                    Console.Clear();
+                    Console.Write(goingList.ToString());
+                });
 
             Console.ReadLine();
         }
