@@ -4,7 +4,7 @@ using EasyQMeetup.Domain.Events;
 
 namespace EasyQMeetup.Domain
 {
-    public class Meetup
+    public class Meetup : IAggregate
     {
         private readonly ICollection<IDomainEvent> _events = new List<IDomainEvent>();
         

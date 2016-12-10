@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Db;
-using EasyNetQ;
 using EasyQMeetup.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +13,10 @@ namespace Api.Controllers
     public class MeetupController
     {
         private readonly MeetupDbContext _dbContext;
-        private readonly IBus _bus;
 
         public MeetupController(MeetupDbContext dbContext)
         {
             _dbContext = dbContext;
-            _bus = RabbitHutch.CreateBus("amqp://guest:guest@localhost:5672");
         }
 
         [HttpGet]
@@ -45,26 +42,16 @@ namespace Api.Controllers
         {
             var meetup = _dbContext.Meetups.FirstOrDefault(x => x.Id == id);
             meetup.RSVP(rsvp.UserName, rsvp.PlusNumber);
-
             await _dbContext.SaveChangesAsync();
-            await PublishEvents(meetup.GetEvents());
         }
 
-        // [HttpDelete]
-        // [Route("api/[controller]/{id}/rsvp")]
-        // public async Task CancelRSVP(Guid id, [FromBody]string name)
-        // {
-        //     var meetup = _dbContext.Meetups.FirstOrDefault(x => x.Id == id);
-        //     meetup.CancelRSVP(name);
-
-        //     await _dbContext.SaveChangesAsync();
-        //     await PublishEvents(meetup.GetEvents());
-        // }
-
-        private async Task PublishEvents(IEnumerable<IDomainEvent> events)
+        [HttpDelete]
+        [Route("api/[controller]/{id}/rsvp")]
+        public async Task CancelRSVP(Guid id, [FromBody]string name)
         {
-            foreach (dynamic domainEvent in events)
-                await _bus.PublishAsync(domainEvent);
+            var meetup = _dbContext.Meetups.FirstOrDefault(x => x.Id == id);
+            meetup.CancelRSVP(name);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
