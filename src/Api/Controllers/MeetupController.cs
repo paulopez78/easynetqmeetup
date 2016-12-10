@@ -28,9 +28,9 @@ namespace Api.Controllers
             await _dbContext.Meetups.FirstOrDefaultAsync(x => x.Id == id);
 
         [HttpPost]
-        public async Task<Meetup> CreateMeetup([FromBody]string description)
+        public async Task<Meetup> CreateMeetup([FromBody]MeetupModel model)
         {
-            var meetup = new Meetup(description);
+            var meetup = new Meetup(model.Description);
             _dbContext.Meetups.Add(meetup);
             await _dbContext.SaveChangesAsync();
             return meetup;
@@ -47,10 +47,10 @@ namespace Api.Controllers
 
         [HttpDelete]
         [Route("api/[controller]/{id}/rsvp")]
-        public async Task CancelRSVP(Guid id, [FromBody]string name)
+        public async Task CancelRSVP(Guid id, [FromBody]RSVPModel rsvp)
         {
             var meetup = _dbContext.Meetups.FirstOrDefault(x => x.Id == id);
-            meetup.CancelRSVP(name);
+            meetup.CancelRSVP(rsvp.UserName);
             await _dbContext.SaveChangesAsync();
         }
     }

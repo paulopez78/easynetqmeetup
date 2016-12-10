@@ -1,5 +1,3 @@
-
-
 namespace Api.Controllers
 {
     public class RSVPModel
