@@ -1,5 +1,6 @@
-# Domain Events with EasyNetQ example
-## Simple [dotnet core](https://dotnet.github.io/) example showing how to use the library [EasyNetQ](http://easynetq.com/) as an infrastructure for [Domain Events](https://martinfowler.com/eaaDev/DomainEvent.html)
+# Domain Events with EasyNetQ and Rabbitmq
+
+### Simple [dotnet core](https://dotnet.github.io/) example showing how to use the library [EasyNetQ](http://easynetq.com/) as an infrastructure for [Domain Events](https://martinfowler.com/eaaDev/DomainEvent.html)
 
 * Run it with docker
 ```
