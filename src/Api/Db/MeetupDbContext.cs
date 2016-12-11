@@ -11,9 +11,9 @@ namespace Api.Db
     {
         private readonly IBus _bus;
 
-        public MeetupDbContext()
+        public MeetupDbContext(IBus bus)
         {
-            _bus = RabbitHutch.CreateBus("amqp://guest:guest@bus:5672");
+            _bus = bus;
         }
 
         public DbSet<Meetup> Meetups { get; set; }

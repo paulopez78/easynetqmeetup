@@ -5,6 +5,9 @@
     "emitEntryPoint": true
   },
   "dependencies": {
+    "Microsoft.Extensions.Configuration":"1.1.0",
+    "Microsoft.Extensions.Configuration.CommandLine": "1.1.0",
+    "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.1.0",
     "EasyNetQ": "2.0.3-netcore0001",
     "Domain": {
       "target": "project"

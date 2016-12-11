@@ -1,4 +1,5 @@
 using Api.Db;
+using EasyNetQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,8 +24,15 @@ namespace ApiTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = $@"
+                host={Configuration["RABBIT_HOST"]};
+                username={Configuration["RABBIT_USER"]};
+                password={Configuration["RABBIT_PASSWORD"]}";
+
             services.AddEntityFrameworkInMemoryDatabase()
                     .AddDbContext<MeetupDbContext>();
+
+            services.AddSingleton<IBus>(RabbitHutch.CreateBus(connectionString));
 
             services.AddMvcCore()
                     .AddApiExplorer()

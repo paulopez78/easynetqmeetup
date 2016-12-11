@@ -1,6 +1,7 @@
 ﻿using System;
 using EasyNetQ;
 using EasyQMeetup.Domain.Events;
+using Microsoft.Extensions.Configuration;
 
 namespace EasyQMeetup
 {
@@ -8,8 +9,18 @@ namespace EasyQMeetup
     {
         public static void Main(string[] args)
         {
+            var config = new ConfigurationBuilder()
+                .AddCommandLine(args)
+                .AddEnvironmentVariables()
+                .Build();
+
+            var connectionString = $@"
+                host={config["RABBIT_HOST"]};
+                username={config["RABBIT_USER"]};
+                password={config["RABBIT_PASSWORD"]}";
+            
             var goingList = new MeetupGoingList();
-            var bus = RabbitHutch.CreateBus("amqp://guest:guest@bus:5672");
+            var bus = RabbitHutch.CreateBus(connectionString);
 
             bus.Subscribe<RSVPConfirmedEvent>("MeetupRSVP_Subscription", 
                 @event => {

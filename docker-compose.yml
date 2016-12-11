@@ -5,7 +5,11 @@ services:
     build: 
       context: .
       dockerfile: ./docker/api/dockerfile
-    depends_on: 
+    environment:
+      RABBIT_HOST: "bus:5672"
+      RABBIT_USER: "guest"
+      RABBIT_PASSWORD: "guest"
+    depends_on:
       - "bus"
     ports:
       - "5000:5000"
@@ -14,6 +18,10 @@ services:
     build: 
       context: .
       dockerfile: ./docker/consumer/dockerfile
+    environment:
+      RABBIT_HOST: "bus:5672"
+      RABBIT_USER: "guest"
+      RABBIT_PASSWORD: "guest"
     depends_on: 
       - "bus"
 
