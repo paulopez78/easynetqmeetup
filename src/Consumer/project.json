@@ -8,6 +8,10 @@
     "Microsoft.Extensions.Configuration":"1.1.0",
     "Microsoft.Extensions.Configuration.CommandLine": "1.1.0",
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.1.0",
+    "Microsoft.Extensions.Configuration.Json": "1.1.0",
+    "Microsoft.Extensions.Logging": "1.1.0",
+    "Microsoft.Extensions.Logging.Console": "1.1.0",
+    "Microsoft.Extensions.Logging.Debug": "1.1.0",
     "EasyNetQ": "2.0.3-netcore0001",
     "Domain": {
       "target": "project"
@@ -23,5 +27,11 @@
       },
       "imports": "dnxcore50"
     }
-  }
+  },
+  
+  "publishOptions": {
+    "include": [
+      "appsettings.json"
+    ]
+  }  
 }

@@ -2,6 +2,7 @@
 using EasyNetQ;
 using EasyQMeetup.Domain.Events;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace EasyQMeetup
 {
@@ -11,32 +12,39 @@ namespace EasyQMeetup
         {
             var config = new ConfigurationBuilder()
                 .AddCommandLine(args)
+                .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
                 .Build();
 
-            var connectionString = $@"
-                host={config["RABBIT_HOST"]};
-                username={config["RABBIT_USER"]};
-                password={config["RABBIT_PASSWORD"]}";
-            
+            var logger = new LoggerFactory()
+                .AddConsole(config.GetSection("Logging"))
+                .AddDebug()
+                .CreateLogger<Consumer>();
+
+
             var goingList = new MeetupGoingList();
-            var bus = RabbitHutch.CreateBus(connectionString);
+            var bus = RabbitHutch.CreateBus(GetConnectionString(config));
+
+            logger.LogInformation("Starting Consumer");
 
             bus.Subscribe<RSVPConfirmedEvent>("MeetupRSVP_Subscription", 
                 @event => {
                     goingList.Confirm(@event.UserName, @event.PlusNumber);
-                    Console.Clear();
-                    Console.Write(goingList.ToString());
+                    logger.LogInformation(goingList.ToString());
                 });
 
             bus.Subscribe<RSVPCancelledEvent>("MeetupRSVP_Subscription", 
                 @event => {
                     goingList.Cancel(@event.UserName);
-                    Console.Clear();
-                    Console.Write(goingList.ToString());
+                    logger.LogInformation(goingList.ToString());
                 });
 
             Console.ReadLine();
         }
+
+        private static string GetConnectionString(IConfiguration config) => 
+            $@"host={config["RABBIT_HOST"]};
+            username={config["RABBIT_USER"]};
+            password={config["RABBIT_PASSWORD"]}";
     }
 }
