@@ -11,4 +11,4 @@ RUN dotnet restore
 RUN dotnet publish -c Release -o out
 
 ENV ASPNETCORE_URLS http://+:5000
-ENTRYPOINT ["dotnet", "/meetup/Api/out/Api.dll"]
+ENTRYPOINT ["dotnet", "./out/Api.dll"]

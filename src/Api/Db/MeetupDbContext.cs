@@ -13,7 +13,7 @@ namespace Api.Db
 
         public MeetupDbContext()
         {
-            _bus = RabbitHutch.CreateBus("amqp://guest:guest@localhost:5672");
+            _bus = RabbitHutch.CreateBus("amqp://guest:guest@bus:5672");
         }
 
         public DbSet<Meetup> Meetups { get; set; }

@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: ./docker/api/dockerfile
+    depends_on: 
+      - "bus"
+    ports:
+      - "5000:5000"
+
+  consumer:
+    build: 
+      context: .
+      dockerfile: ./docker/consumer/dockerfile
+    depends_on: 
+      - "bus"
+
+  bus:
+    image: rabbitmq:3-management
+    ports:
+      - "8081:15672" 
+      - "5672:5672"
