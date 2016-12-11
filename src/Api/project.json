@@ -25,10 +25,6 @@
     }
   },
 
-  "tools": {
-    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.1.0-preview4-final"
-  },
-
   "frameworks": {
     "netcoreapp1.1": {
       "imports": [
@@ -51,15 +47,8 @@
 
   "publishOptions": {
     "include": [
-      "wwwroot",
-      "**/*.cshtml",
-      "appsettings.json",
-      "web.config"
+      "appsettings.json"
     ]
-  },
-
-  "scripts": {
-    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   },
 
   "tooling": {
