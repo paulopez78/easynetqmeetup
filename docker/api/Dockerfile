@@ -1,4 +1,4 @@
-FROM microsoft/dotnet
+FROM microsoft/aspnetcore-build
 
 WORKDIR /meetup/Api
 

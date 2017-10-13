@@ -1,4 +1,4 @@
-FROM microsoft/dotnet
+FROM microsoft/dotnet:sdk
 
 WORKDIR /meetup/Consumer
 
